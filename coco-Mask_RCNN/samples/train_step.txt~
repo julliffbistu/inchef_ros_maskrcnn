@@ -1,0 +1,4 @@
+python3 coco.py train --dataset=coco/ --model=coco
+
+
+sudo python coco.py train --dataset=/home/zhulifu/Desktop/Mask_RCNN/samples/coco/data_set/ --model=/home/zhulifu/Desktop/Mask_RCNN/mask_rcnn_coco.h5 

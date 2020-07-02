@@ -1,0 +1,176 @@
+ros下camera与base标定
+ros下安装knect功能包
+https://blog.csdn.net/qq_33835307/article/details/81272377
+ros下easy_hand手眼标定
+https://blog.csdn.net/sinat_23853639/article/details/80276848
+ros下kinect easyhand标定
+https://zhuanlan.zhihu.com/p/127803592
+ros下kinect 内参标定
+https://blog.csdn.net/qq_40313712/article/details/85231192?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase
+
+
+
+
+sensor:=011153341147 base_name:=kinectleft
+sensor:=007625154147 base_name:=kinectright
+(1)open two kinectv2
+roslaunch kinect2_bridge kinect2_bridge.launch sensor:=011153341147 base_name:=kinectleft
+roslaunch kinect2_bridge kinect2_bridge.launch sensor:=007625154147 base_name:=kinectright
+single camera(1920*1024):
+	rgb:	loss 2frame rate 10%
+		loss 3frame rate 0% just beginning
+	depth:
+		loss 2frame rate 10%
+		loss 3frame rate 0% just beginning
+	rgb_depth 
+		depth faster than rgb 20fps,then same time 
+
+
+two camera(1920*1024):
+	rgb:	loss 2frame rate 10%
+		loss 3frame rate 70% just beginning
+	depth:
+		loss 2frame rate 10%
+		loss 3frame rate 70% just beginning
+	rgb_depth 
+		depth faster than rgb 20fps,then small time 
+	two cameras
+		30% 100ms
+	
+
+
+two camera(960*540):
+	rgb:	loss 2frame rate 10%
+		loss 3frame rate 0% just beginning
+	depth:
+		loss 2frame rate 10%
+		loss 3frame rate 0% just beginning
+	rgb_depth 
+		depth faster than rgb 20fps,then same time
+	two cameras
+		0% 100ms
+ 
+
+
+usb3 bw error
+https://github.com/microsoft/Azure-Kinect-Sensor-SDK/issues/485
+
+(2)ur-melodic
+	#setup ur driver
+	https://github.com/ros-industrial/universal_robot/tree/melodic-devel
+sudo opt-get update zhuyi yuan
+https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/install_urcap_cb3.md
+The input topic '/ur3_kinectv2_calibration_eye_on_base/world_effector' is not yet advertised
+path setup 
+
+
+
+(3),ros-melodic-visp
+sudo apt-get install ros-melodic-visp
+(4)vision_visp	
+https://github.com/lagadic/vision_visp/tree/melodic
+git clone melodic https://github.com/lagadic/vision_visp.git
+catkin_make --pkg visp_hand2eye_calibration
+
+(5)aruco_ros
+git clone https://github.com/pal-robotics/aruco_ros.git
+catkin_make
+
+(6)easy_handeye
+robot position cannot reach
+
+The calibration parameters of the connected robot don't match the ones from the given kinematics config file. Please be aware that this can lead to critical inaccuracies of tcp positions. Use the ur_calibration tool to extract the correct calibration from the robot and pass that into the description. See [TODO Link to documentation] for details.
+
+	
+The input topic '/ur3_kinectv2_calibration_eye_on_base/world_effector' is not yet advertised
+
+leftdown:
+translation: 
+  x: 0.385786033643
+  y: -0.152371448997
+  z: -0.40040439111
+rotation: 
+  x: 0.144696746562
+  y: -0.05783707512
+  z: -0.493906872101
+  w: 0.855437739387
+
+translation: 
+  x: 0.385113739655
+  y: -0.152958118333
+  z: -0.40142694415
+rotation: 
+  x: 0.144158890453
+  y: -0.0577310108437
+  z: -0.49453097976
+  w: 0.855175101806
+
+
+
+
+
+right_down 0.6m
+
+
+
+translation: 
+  x: 0.0843952526245
+  y: 0.338242737245
+  z: -0.400451036783
+rotation: 
+  x: 0.125123264731
+  y: -0.0714289676228
+  z: -0.492029538248
+  w: 0.85857382018
+
+
+translation: 
+  x: 0.0838852108173
+  y: 0.337471514584
+  z: -0.402613628735
+rotation: 
+  x: 0.124766902497
+  y: -0.0714241549158
+  z: -0.492327059773
+  w: 0.858455517981
+
+translation: 
+  x: 0.0825580823054
+  y: 0.337111271102
+  z: -0.40156332158
+rotation: 
+  x: 0.124211351742
+  y: -0.0713040871095
+  z: -0.493126543919
+  w: 0.858087104519
+
+
+
+
+left_top 0.45cm,,20cm
+
+translation: 
+  x: 0.384796090662
+  y: -0.157789668147
+  z: -0.19482992918
+rotation: 
+  x: 0.143057719582
+  y: -0.0572489222373
+  z: -0.493598741287
+  w: 0.855930681989
+
+
+
+left=30cm.up=10cm
+
+
+translation: 
+  x: 0.230876676194
+  y: 0.10494135697
+  z: -0.291382973708
+rotation: 
+  x: 0.142239939173
+  y: -0.0585775432483
+  z: -0.494130301729
+  w: 0.855670331404
+

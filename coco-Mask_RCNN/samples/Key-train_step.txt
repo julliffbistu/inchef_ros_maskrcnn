@@ -1,0 +1,77 @@
+python3 coco.py train --dataset=coco/ --model=coco
+
+
+sudo python coco.py train --dataset=/home/zhulifu/Desktop/Mask_RCNN/samples/coco/data_set/ --model=/home/zhulifu/Desktop/Mask_RCNN/mask_rcnn_coco.h5 
+
+
+
+guanjian:
+
+coco.py xiugai
+
+1.from mrcnn.config import Config   ##jiang mrcnn fangdao muluxia
+
+
+2.class CocoConfig(Config):
+    # 命名配置
+    NAME = "coco"
+
+    # 输入图像resing
+    IMAGE_MIN_DIM = 480
+    IMAGE_MAX_DIM = 640
+
+    # 使用的GPU数量。 对于CPU训练，请使用1
+    GPU_COUNT = 1
+
+    IMAGES_PER_GPU = 1
+
+    batch_size = GPU_COUNT * IMAGES_PER_GPU
+    # STEPS_PER_EPOCH = int(train_images / batch_size * (3 / 4))
+    STEPS_PER_EPOCH=1000
+
+    VALIDATION_STEPS = STEPS_PER_EPOCH // (1000 // 50)
+
+    NUM_CLASSES = 1 + 2  # 必须包含一个背景（背景作为一个类别） Pascal VOC 2007有20个类，前面加1 表示加上背景
+
+    scale = 1024 // IMAGE_MAX_DIM
+    RPN_ANCHOR_SCALES = (32 // scale, 64 // scale, 128 // scale, 256 // scale, 512 // scale)  
+
+    RPN_NMS_THRESHOLD = 0.6  # 0.6
+
+    RPN_TRAIN_ANCHORS_PER_IMAGE = 256 // scale
+
+    MINI_MASK_SHAPE = (56 // scale, 56 // scale)
+
+    TRAIN_ROIS_PER_IMAGE = 200 // scale
+
+    DETECTION_MAX_INSTANCES = 100 * scale * 2 // 3
+
+    DETECTION_MIN_CONFIDENCE = 0.6    ##tihuan yuanlai de 
+
+
+
+3.    model.load_weights(model_path, by_name=True, exclude=[
+            "mrcnn_class_logits", "mrcnn_bbox_fc",
+            "mrcnn_bbox", "mrcnn_mask"])   ##bi xu you
+
+   ##, exclude=[
+            "mrcnn_class_logits", "mrcnn_bbox_fc",
+            "mrcnn_bbox", "mrcnn_mask"]
+
+
+4.  mrcnn wenjian xia  utils.py
+#        def clean_name(name):   ##zhushidiao
+#            """Returns a shorter version of object names for cleaner display."""
+#            return ",".join(name.split(",")[:1])
+    
+  4.2 #        self.class_names = [clean_name(c["name"]) for c in self.class_info]
+      ##zhu shi diao
+
+
+
+
+
+
+
+
+
